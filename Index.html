@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Moder DIMAS</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        .calculator {
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #04cdff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .calculator h2 {
+            margin-bottom: 2px;
+        }
+        .display {
+            width: 90%;
+            height: 60px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: right;
+            padding: 5px;
+            font-size: 2em;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+        .button {
+            padding: 8px;
+            font-size: 1.5em;
+            border: 2px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #ddd;
+        }
+        .button.operator {
+            background-color: #ff9500;
+            color: #fff;
+        }
+        .button.operator:hover {
+            background-color: #e08900;
+        }
+        .button.equal {
+            background-color: #34c759;
+            color: #fff;
+            grid-column: span 4;
+        }
+        .button.equal:hover {
+            background-color: #2da94f;
+        }
+        .button.clear {
+            background-color: #ff3b30;
+            color: #fff;
+        }
+        .button.clear:hover {
+            background-color: #e03228;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>KALKULATOR DIMAS</h2>
+        <h2>KA SEMESTER 1</h2>
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="button clear" onclick="clearDisplay()">C</button>
+            <button class="button operator" onclick="calculateFactorial()">!</button>
+            <button class="button operator" onclick="appendOperator('^')">^</button>
+            <button class="button operator" onclick="appendOperator('%')">%</button>
+            <button class="button" onclick="appendNumber(7)">7</button>
+            <button class="button" onclick="appendNumber(8)">8</button>
+            <button class="button" onclick="appendNumber(9)">9</button>
+            <button class="button operator" onclick="appendOperator('/')">/</button>
+            <button class="button" onclick="appendNumber(4)">4</button>
+            <button class="button" onclick="appendNumber(5)">5</button>
+            <button class="button" onclick="appendNumber(6)">6</button>
+            <button class="button operator" onclick="appendOperator('*')">*</button>
+            <button class="button" onclick="appendNumber(1)">1</button>
+            <button class="button" onclick="appendNumber(2)">2</button>
+            <button class="button" onclick="appendNumber(3)">3</button>
+            <button class="button operator" onclick="appendOperator('-')">-</button>
+            <button class="button" onclick="appendNumber(0)">0</button>
+            <button class="button operator" onclick="toggleSign()">±</button>
+            <button class="button operator" onclick="appendOperator('.')">.</button>
+            <button class="button operator" onclick="appendOperator('+')">+</button>
+            <button class="button equal" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        function appendNumber(number) {
+            const display = document.getElementById('display');
+            if (display.textContent === '0') {
+                display.textContent = number;
+            } else {
+                display.textContent += number;
+            }
+        }
+
+        function appendOperator(operator) {
+            const display = document.getElementById('display');
+            display.textContent += operator;
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').textContent = '0';
+        }
+
+        function toggleSign() {
+            const display = document.getElementById('display');
+            if (display.textContent.startsWith('-')) {
+                display.textContent = display.textContent.substring(1);
+            } else {
+                display.textContent = '-' + display.textContent;
+            }
+        }
+
+        function calculateFactorial() {
+            const display = document.getElementById('display');
+            const num = parseInt(display.textContent);
+            if (isNaN(num) || num < 0) {
+                display.textContent = 'Error';
+            } else {
+                display.textContent = factorial(num);
+            }
+        }
+
+        function calculateResult() {
+            const display = document.getElementById('display');
+            let expression = display.textContent.replace('^', '**');
+            try {
+                display.textContent = eval(expression);
+            } catch {
+                display.textContent = 'Error';
+            }
+        }
+
+        function factorial(n) {
+            return (n <= 1) ? 1 : n * factorial(n - 1);
+        }
+    </script>
+</body>
+</html>
